@@ -25,9 +25,15 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = $this->books->orderBy('id', 'desc')->paginate();
+        $q = $this->books;
+
+        if ($request->filled('q')) {
+            $q->search($request->q);
+        }
+
+        $books = $q->orderBy('id', 'desc')->paginate(20);
 
         return view('index', compact('books'));
     }
@@ -98,12 +104,20 @@ class BookController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Book $book)
     {
-        //
+        $this->authorize('update', $book);
+
+        $this->validateInput($request);
+
+        $data = $request->only(['name', 'udk', 'bbk', 'published_at', 'publish_place', 'annotation']);
+        $book->authors()->sync($request->authors);
+        $book->update($data);
+
+        return redirect(route('books.index'))->with('success', 'Книга успешно обновлена!');
     }
 
     /**

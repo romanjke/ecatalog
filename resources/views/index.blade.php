@@ -1,6 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
+    <nav class="navbar search">
+        <div class="container-fluid">
+            <div class="navbar-header">
+
+                <!-- Collapsed Hamburger -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#search-navbar-collapse">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="search-navbar-collapse">
+                {{ Form::open(['route' => 'books.index', 'method' => 'get', 'class' => 'navbar-form navbar-right']) }}
+
+                    <div class="pull-left">
+                        {{ Form::text('q', '', array_merge(['class' => 'form-control'], ['placeholder' => 'Поиск'])) }}
+                    </div>
+
+                    <div class="pull-right form-group text-center">
+                        {{ Form::submit('Найти', ['class' => 'btn btn-primary']) }}
+
+{{--                        <a href="{{ route('books.index') }}" class="btn btn-default">Сбросить</a>--}}
+                    </div>
+
+                {{ Form::close() }}
+            </div>
+        </div>
+    </nav>
+
     @component('components.panel')
         @can('create', 'App\Book')
             <div class='mb-2 pull-right'>
@@ -46,7 +79,7 @@
                         </th>
                     </tr>
                 @empty
-                    <p>Список книг пуст</p>
+                    <p><strong>Список книг пуст</strong></p>
                 @endforelse
             </tbody>
         </table>

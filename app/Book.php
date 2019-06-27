@@ -20,7 +20,7 @@ class Book extends Model
      *
      * @var string
      */
-    protected $dateFormat = 'Y-m-d';
+    protected $dateFormat = 'Y-m-d H:i:s';
 
     /**
      * The attributes that are mass assignable.
@@ -30,6 +30,13 @@ class Book extends Model
     protected $fillable = [
         'name', 'udk', 'bbk', 'published_at', 'publish_place', 'annotation'
     ];
+
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['authors'];
 
     /**
      * The authors that belong to the book.
