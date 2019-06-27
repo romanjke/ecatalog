@@ -12,9 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return redirect(route('books.index'));
+})->name('index');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('books', 'BookController');

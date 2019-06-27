@@ -7,7 +7,7 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+// window.Vue = require('vue');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -15,8 +15,26 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+// Vue.component('example-component', require('./components/ExampleComponent.vue'));
+//
+// const app = new Vue({
+//     el: '#app'
+// });
 
-const app = new Vue({
-    el: '#app'
+$('.select2').each(function () {
+    let el = $(this);
+    let api_url = el.data('api-url');
+    let text_field = el.data('text-field');
+    let id_field = el.data('id-field');
+
+    axios.get(api_url).then(function (response) {
+        let data = _.map(response.data, function (o) {
+            return {id: o[id_field], text: o[text_field]}
+        });
+
+        el.select2({
+            theme: "bootstrap",
+            data: data
+        });
+    });
 });

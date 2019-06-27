@@ -18,9 +18,9 @@ class CreateBooksTable extends Migration
             $table->string('name');
             $table->string('udk');
             $table->string('bbk');
-            $table->timestamp('published_at');
+            $table->date('published_at');
             $table->string('publish_place')->nullable();
-            $table->text('annotation')->nullbale();
+            $table->text('annotation')->nullable();
             $table->timestamps();
         });
     }

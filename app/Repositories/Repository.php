@@ -110,6 +110,16 @@ abstract class Repository implements RepositoryInterface
     }
 
     /**
+     * @param $column
+     * @param $order
+     * @return mixed
+     */
+    public function orderBy($column, $order = 'desc')
+    {
+        return $this->model->orderBy($column, $order);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Builder
      * @throws App\Repositories\RepositoryException
      */
